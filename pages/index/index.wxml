@@ -2,6 +2,6 @@
   <image class='avatar-image' src="../../images/avatar/4.png"></image>
   <text class='avatar-text'>hello</text>
   <view class='avatar-container'>
-    <text class='avatar-content'>hello</text>
+    <text class='avatar-content' bindtap="onTap">hello</text>
   </view>
 </view>
