@@ -69,7 +69,7 @@
 }
 .content{
   float: right;
-  margin-left: 20rpx;
+  margin-left: 30rpx;
   margin-top: 20rpx;
   margin-right: 30rpx;
   color:#555;
