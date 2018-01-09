@@ -1,0 +1,7 @@
+<view class='container'>
+  <image class='avatar-image' src="../../images/avatar/4.png"></image>
+  <text class='avatar-text'>hello</text>
+  <view class='avatar-container'>
+    <text class='avatar-content'>hello</text>
+  </view>
+</view>
