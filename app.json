@@ -1,9 +1,11 @@
 {
   "pages":[
+    "pages/posts/post-detail/post-detail",
     "pages/index/index",
     "pages/posts/post"    
   ],
-  "window":{
-    "navigationBarBackgroundColor":"#b3d4db"
-  }
+    "window":{
+          "navigationBarBackgroundColor":"#b3d4db"
+    }
 }
+ 
