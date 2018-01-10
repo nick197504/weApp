@@ -46,8 +46,11 @@ Page({
     postCollected = !postCollected
     //console.log(postCollected);
     postsCollected[that.data.currentPostId] = postCollected;
-    console.log(postsCollected);
+    //console.log(postsCollected);
     wx.setStorageSync("collected-key", postsCollected);
+    this.setData({
+      collected: postCollected
+    });
   },
 
   /**
