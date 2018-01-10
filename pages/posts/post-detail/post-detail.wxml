@@ -9,7 +9,8 @@
   <text class='post-detail-title'>{{postData.title}}</text>
   <view>    
     <view class='post-detail-icon-container'>
-      <image  src="../../../images/icon/collection.png"></image>
+      <image wx:if="{{collected}}" catchtap='onShowTap' src="../../../images/icon/collection.png"></image>
+      <image else  catchtap="onShowTap" src="../../../images/icon/collection-anti.png"></image>
       <image  src="../../../images/icon/share.png"></image>
     </view>
     <view class='horizon'></view>

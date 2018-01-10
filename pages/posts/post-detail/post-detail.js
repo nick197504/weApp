@@ -17,9 +17,37 @@ Page({
     var currentPostData = postData.postList[postId];
     //console.log(currentPostData);
     this.setData({
-      postData: currentPostData
+      postData: currentPostData,
+      currentPostId:postId
     });
+
+    var postsCollected = wx.getStorageSync("collected-key");
+    console.log("postsCollected"+postsCollected);
+    if(postsCollected){
+      var postCollected = postsCollected[postId];
+      console.log("postCollected"+postCollected);
+      this.setData({
+        collected:postCollected
+      });
+    }else{
+      postsCollected = {};
+      postsCollected[postId] = false;
+      wx.setStorageSync("collected-key", postsCollected);
+    }
     
+  },
+
+  onShowTap:function(event){
+    var that = this;
+    //this.wx.getStorageSync("collected_key");
+    var postsCollected = wx.getStorageSync("collected-key");
+    console.log(postsCollected);
+    var postCollected = postsCollected[that.data.currentPostId];
+    postCollected = !postCollected
+    //console.log(postCollected);
+    postsCollected[that.data.currentPostId] = postCollected;
+    console.log(postsCollected);
+    wx.setStorageSync("collected-key", postsCollected);
   },
 
   /**

@@ -10,10 +10,10 @@ Page({
   },
 
   onTap: function(event){
-    var postid = event.currentTarget.dataset.postid;
-    console.log("onTap");
-    console.log("post id is"+ postid);
-    wx.navigateTo({      
+    //event事件中的currentTaget.dataset.postId来取出postid
+    var postid = event.currentTarget.dataset.postid;    
+    wx.navigateTo({  
+      //通过url地址加？的形式传递参数    
       url: 'post-detail/post-detail?id='+postid,
     })
   },
