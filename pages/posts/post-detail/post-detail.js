@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    isPlayingMusic:false
   },
 
   /**
@@ -34,7 +34,22 @@ Page({
       postsCollected[postId] = false;
       wx.setStorageSync("collected-key", postsCollected);
     }
+    this.playMusicMonitor();
     
+  },
+
+  playMusicMonitor:function(){
+    var that = this;
+    wx.onBackgroundAudioPlay(function(){
+        that.setData({
+          isPlayingMusic:true
+        })
+    });
+    wx.onBackgroundAudioPause(function(){
+      that.setData({
+        isPlayingMusic:false
+      })
+    })
   },
 
   onShowTap:function(event){
@@ -117,6 +132,24 @@ Page({
   },
 
   onMusicTap:function(event){
+    var currentPostData = postData.postList[this.data.currentPostId];
+    var currentPostId = this.data.currentPostId;
+    var isPlayingMusic = this.data.isPlayingMusic;
+    if(isPlayingMusic){
+      wx.pauseBackgroundAudio();      
+      this.setData({
+        isPlayingMusic:false
+      });
+    }else{
+      wx.playBackgroundAudio({
+        dataUrl: currentPostData.music.url,
+        title: currentPostData.music.title,
+        coverImgUrl: currentPostData.music.coverImg
+      });      
+      this.setData({
+        isPlayingMusic:true
+      });
+    }
 
   },
   /**
