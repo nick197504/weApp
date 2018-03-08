@@ -2,6 +2,15 @@
   width:100%;
   height:374rpx;
 }
+.audio{
+  width:102rpx;
+  height: 110rpx;
+  position: absolute;
+  left:50%;
+  margin-left: -51rpx;
+  top: 180rpx;
+  opacity: 0.6;
+}
 .post-detail-author-container{
   display: flex;
   flex-direction: row;
@@ -44,18 +53,20 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.tool{
+  margin-top: 20rpx;
+}
 .post-detail-icon-container{
   margin-top: 20rpx;
-  margin-right: 20rpx;
-  display: flex;
-  flex-direction: row;
+  margin-right: 40rpx;  
   vertical-align: middle;
   float: right;
 }
 .post-detail-icon-container image{
   width: 60rpx;
   height: 60rpx;
-  margin-right: 40rpx;
+  margin-right: 20rpx;
+  
 }
 .horizon{
  width:750rpx;

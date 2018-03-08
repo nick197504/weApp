@@ -1,5 +1,6 @@
 <view>
   <image class="post-detail-image" src="{{postData.imgSrc}}"></image>
+  <image class='audio' catchtap='onMusicTap' src="/images/music/music-start.png"></image>
   <view class='post-detail-author-container'>
     <image class="post-detail-author-image" src="{{postData.avatar}}"></image>
     <text class='post-detail-author'>{{postData.author}}</text>
@@ -7,11 +8,11 @@
     <text class='post-detail-time'>{{postData.dateTime}}</text>
   </view>
   <text class='post-detail-title'>{{postData.title}}</text>
-  <view>    
+  <view class="tool">    
     <view class='post-detail-icon-container'>
       <image wx:if="{{collected}}" catchtap='onShowTap' src="../../../images/icon/collection.png"></image>
-      <image else  catchtap="onShowTap" src="../../../images/icon/collection-anti.png"></image>
-      <image  src="../../../images/icon/share.png"></image>
+      <image wx:else  catchtap="onShowTap" src="../../../images/icon/collection-anti.png"></image>
+      <image  catchtap="onShareTap" src="../../../images/icon/share.png"></image>
     </view>
     <view class='horizon'></view>
   </view>

@@ -38,21 +38,87 @@ Page({
   },
 
   onShowTap:function(event){
-    var that = this;
-    //this.wx.getStorageSync("collected_key");
+   //this.getPostCollectSync();
+   this.getPostCollectAsy();
+    //测试提示框
+   //this.showModal(postsCollected,postCollected);
+  },
+  
+  getPostCollectSync:function(){
+    //同步获取数据   
     var postsCollected = wx.getStorageSync("collected-key");
-    console.log(postsCollected);
-    var postCollected = postsCollected[that.data.currentPostId];
+    var postCollected = postsCollected[this.data.currentPostId];
     postCollected = !postCollected
-    //console.log(postCollected);
-    postsCollected[that.data.currentPostId] = postCollected;
-    //console.log(postsCollected);
+    postsCollected[this.data.currentPostId] = postCollected;
+    this.showToast(postsCollected, postCollected);
+  },
+
+  getPostCollectAsy:function(){
+  //异步获取数据
+  var that = this;
+  wx.getStorage({
+    key: 'collected-key',
+    success: function(res) {
+      console.log(res);
+      var postsCollected = res.data;
+      var postCollected = postsCollected[that.data.currentPostId];
+      //收藏变为不收藏
+      postCollected = !postCollected;
+      postsCollected[that.data.currentPostId] = postCollected;
+      that.showToast(postsCollected,postCollected);
+    },
+  })
+  },
+  //显示收藏提示的方法
+  showToast: function (postsCollected, postCollected){
     wx.setStorageSync("collected-key", postsCollected);
     this.setData({
       collected: postCollected
     });
+    wx.showToast({
+      title: postCollected ? '收藏成功' : "取消收藏",
+    })
+  },
+  showModal: function (postsCollected, postCollected){
+    var that = this;
+    wx.showModal({
+      title: '收藏提示',
+      content: postCollected?'确认收藏？':"确认取消？",
+      showCancel: true,
+      cancelText: '取消',
+      cancelColor: '405f80',
+      confirmText: '确认',
+      confirmColor: '405f80',
+      success: function (res) {
+        if(res.confirm){
+          wx.setStorageSync("collected-key", postsCollected);
+          that.setData({
+            collected: postCollected
+          });
+        }
+       }      
+    })
+  },
+  onShareTap:function(){
+    var itemList = [
+      "分享到朋友圈",
+      "分享给朋友",
+      "分享到QQ",
+      "分享到微博"
+    ];
+    wx.showActionSheet({
+      itemList: itemList,
+      itemColor:"405f80",
+      success:function(res){
+       // console.log(res.tapIndex);
+        console.log(res);
+      }
+    });
   },
 
+  onMusicTap:function(event){
+
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -99,6 +165,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    
+    //this.onShareTap();
+    console.log("onShareMessage");
   }
 })
