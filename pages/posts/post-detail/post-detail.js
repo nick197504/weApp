@@ -1,5 +1,5 @@
 var postData = require("../../../data/posts-data.js");
-
+var app = getApp();
 Page({
 
   /**
@@ -34,6 +34,12 @@ Page({
       postsCollected[postId] = false;
       wx.setStorageSync("collected-key", postsCollected);
     }
+    //console.log(app.globalData);
+    if(app.globalData.g_isPlayMusic && app.globalData.g_currentPostId == postId){
+      this.setData({
+        isPlayingMusic: true
+      })
+    }
     this.playMusicMonitor();
     
   },
@@ -41,14 +47,35 @@ Page({
   playMusicMonitor:function(){
     var that = this;
     wx.onBackgroundAudioPlay(function(){
+      //console.log(event);
+      //console.log(getCurrentPages())
+      //getCurrentPages()是到当前页面栈的方法
+      var postsData = getCurrentPages();
+      var currentPost = psotsData[postsData.length-1];
+      var currentPostId = currentPost.data.currentPostId; 
+      //判断从页面栈中取出当前页面是否与实际的昂起按页面相符
+      if(currentPostId == that.data.currentPostId && app.globalData.g_currentPostId == that.data.currentPostId){
         that.setData({
-          isPlayingMusic:true
-        })
+          isPlayingMusic: true
+        });
+        app.globalData.g_isPlayMusic = true;
+        app.globalData.g_currentPostId = that.data.currentPostId;
+      }
+        
     });
     wx.onBackgroundAudioPause(function(){
-      that.setData({
-        isPlayingMusic:false
-      })
+      console.log(getCurrentPages());
+      var postsData = getCurrentPages();
+      var currentPost = psotsData[postsData.length - 1];
+      var currentPostId = currentPost.data.currentPostId; 
+      if (currentPostId == that.data.currentPostId && app.globalData.g_currentPostId == that.data.currentPostId){
+        that.setData({
+          isPlayingMusic: false
+        });
+        app.globalData.g_isPlayMusic = false;
+        app.globalData.g_currentPostId = null;
+      }
+     
     })
   },
 
@@ -140,6 +167,7 @@ Page({
       this.setData({
         isPlayingMusic:false
       });
+      app.globalData.g_isPlayMusic = false;
     }else{
       wx.playBackgroundAudio({
         dataUrl: currentPostData.music.url,
@@ -149,6 +177,8 @@ Page({
       this.setData({
         isPlayingMusic:true
       });
+      app.globalData.g_isPlayMusic = true;
+      app.globalData.g_currentPostId = currentPostId;
     }
 
   },
